@@ -2,23 +2,24 @@
 <q-layout view="lHr lpR lFr">
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
+
       <q-avatar>
         <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
       </q-avatar>
       <q-toolbar-title>
-        Кадровый помощник
 
+        Помощь кадрам
         <q-btn style="margin-left: 40px" color="secondary" label="Табель" icon-right="expand_more">
           <q-menu fit>
             <q-list>
               <q-item clickable v-close-popup>
-                <q-item-section>
-                  Такие табеля
+                <q-item-section @click="$router.push('reportCard')">
+                  Табели на текущий год
                 </q-item-section>
               </q-item>
               <q-item clickable v-close-popup>
                 <q-item-section>
-                  Сякие табеля
+                  Архив табелей
                 </q-item-section>
               </q-item>
             </q-list>
@@ -29,7 +30,7 @@
           <q-menu fit>
             <q-list>
               <q-item clickable v-close-popup>
-                <q-item-section>
+                <q-item-section @click="$router.push({name: 'vacations'})">
                   Графики
                 </q-item-section>
               </q-item>
