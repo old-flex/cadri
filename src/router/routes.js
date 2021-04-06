@@ -15,6 +15,11 @@ const routes = [
     component: () => import('../pages/Login')
   },
   {
+    path: '/editCard',
+    name: 'editCard',
+    component: () => import('../pages/EditReport')
+  },
+  {
     path: '/vacationSchedule',
     name: 'vacations',
     component: () => import('../pages/VacationSchedule')

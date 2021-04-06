@@ -61,9 +61,9 @@
               row-key="name"
               title="Сотрудники"
             >
-              <template v-slot:top-right>
+              <template #top-right>
                 <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">
-                  <template v-slot:append>
+                  <template #append>
                     <q-icon name="search" />
                   </template>
                 </q-input>
