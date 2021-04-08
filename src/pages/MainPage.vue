@@ -83,7 +83,7 @@ export default {
   name: "MainPage",
   data() {
     return {
-      currentSubdivision: 'Бухгалтерия',
+      currentSubdivision: null,
       allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
       isLoading: false,
       filter: '',
