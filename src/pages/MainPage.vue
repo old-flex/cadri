@@ -50,40 +50,26 @@
 
   <q-page-container>
     <q-page class="q-pa-md">
-        <div class="flex flex-center column">
-          <div style="width: 80%;">
-            <q-select style="max-width: 210px; margin-left: auto"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
-          </div>
-          <q-card style="width: 80%;">
-            <q-table
-              :columns="columns"
-              :data="filterEmployees"
-              row-key="name"
-              title="Сотрудники"
-            >
-              <template #top-right>
-                <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">
-                  <template #append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-              </template>
-
-            </q-table>
-          </q-card>
+      <div class="flex  column">
+        <div style="max-width: 210px;" class="text-center text-bold">
+          Выберите подразделение
         </div>
-
+        <q-select style="max-width: 210px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
+      </div>
+        <EditReport class="q-mb-sm" v-for="index in 5" :key="index"/>
     </q-page>
   </q-page-container>
 </q-layout>
 </template>
 
 <script>
+import EditReport from "pages/EditReport";
 export default {
   name: "MainPage",
+  components: {EditReport},
   data() {
     return {
-      currentSubdivision: null,
+      currentSubdivision: "Бухгалтерия",
       allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
       isLoading: false,
       filter: '',

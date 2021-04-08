@@ -1,14 +1,11 @@
 <template>
-  <q-layout view="lHr lpR lFr">
-    <q-page-container>
-      <q-page>
         <div class="flex items-center">
           <q-markup-table separator="cell" flat bordered dense>
-            <tbody v-for="index1 in 10" :key="index1">
+            <tbody >
             <tr>
-              <td v-if="index1 === 1" rowspan="2" class="text-center">Фамилия, инициалы, должность</td>
-              <td v-if="index1 === 1" rowspan="2" class="text-center">Табельный номер</td>
-              <td v-if="index1 === 1" colspan="31" class="text-center">Отметки о явках и неявках</td>
+              <td rowspan="2" class="text-center">Фамилия, инициалы, должность</td>
+              <td  rowspan="2" class="text-center">Табельный номер</td>
+              <td  colspan="31" class="text-center">Отметки о явках и неявках</td>
             </tr>
             <tr>
               <td v-for="index in 31" :key="index">
@@ -31,9 +28,6 @@
 
           </q-markup-table>
         </div>
-      </q-page>
-    </q-page-container>
-  </q-layout>
 </template>
 
 <script>
