@@ -46,12 +46,7 @@
   </q-toolbar>
 </q-header>
 
-<q-drawer class="bg-amber-4" show-if-above v-model="left" side="left" bordered>
-  <div class="flex justify-center items-center full-height column q-gutter-lg">
-    <q-btn class="full-width bg-secondary" @click="tableName = 'Графики отпусков на текущий год'" label="Текущий год"></q-btn>
-    <q-btn class="full-width bg-secondary" @click="tableName = 'Архив графиков отпусков'" label="Архив"></q-btn>
-  </div>
-</q-drawer>
+
 
 <q-page-container>
   <q-page class="q-pa-md">

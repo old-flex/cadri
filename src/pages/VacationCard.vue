@@ -135,37 +135,37 @@ export default {
       ],
       data: [
         {
-          profession: 123,
-          fio: 'Frozen Yogurt',
-          number: 159,
-          daysAmount: 6.0,
-          planned: 24,
-          fact: 4.0,
-          moving: 87,
-          movingDate: '14%',
-          additionalFacts: '1%'
+          profession: 'Начальник отдела',
+          fio: 'Красилов Иван Павлович',
+          number: 48,
+          daysAmount: 28,
+          planned: '24.04.2021',
+          fact: ' ',
+          moving: ' ',
+          movingDate: '24.03.2021',
+          additionalFacts: ''
         },
         {
-          profession: 123,
-          fio: 'Frozen Yogurt',
-          number: 159,
-          daysAmount: 6.0,
-          planned: 24,
-          fact: 4.0,
-          moving: 87,
-          movingDate: '14%',
-          additionalFacts: '1%'
+          profession: 'Главный бугалтер',
+          fio: 'Барышев Альберт Никонорович',
+          number: 156,
+          daysAmount: 28,
+          planned: '24.08.2021',
+          fact: ' ',
+          moving: ' ',
+          movingDate: '24.04.2021',
+          additionalFacts: ''
         },
         {
-          profession: 123,
-          fio: 'Frozen Yogurt',
+          profession: 'Бухгалтер',
+          fio: 'Петров Александр Васильевич',
           number: 159,
-          daysAmount: 6.0,
-          planned: 24,
-          fact: 4.0,
-          moving: 87,
-          movingDate: '14%',
-          additionalFacts: '1%'
+          daysAmount: 28,
+          planned: '24.04.2021',
+          fact: ' ',
+          moving: ' ',
+          movingDate: '24.04.2021',
+          additionalFacts: ''
         },
       ]
     }
