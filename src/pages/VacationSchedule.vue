@@ -58,7 +58,7 @@
 
     <div class="flex flex-center">
       <div style="width: 80%;" class="flex flex-center row justify-between">
-        <q-btn v-if="tableName !== 'Архив графиков отпусков'" label="Создать новый" class="bg-amber-2" style="height: 55px;"/>
+        <q-btn @click="$router.push('/vacationCreate')" v-if="tableName !== 'Архив графиков отпусков'" label="Создать новый" class="bg-amber-2" style="height: 55px;"/>
         <q-select v-if="tableName === 'Архив графиков отпусков'" style="max-width: 210px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
       </div>
       <q-card style="width: 80%;">
