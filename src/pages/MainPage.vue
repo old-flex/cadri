@@ -14,7 +14,7 @@
             <q-list>
               <q-item clickable v-close-popup>
                 <q-item-section @click="$router.push('reportCard')">
-                  Табели на текущий год
+                  Табели на текущий месяц
                 </q-item-section>
               </q-item>
               <q-item clickable v-close-popup>
@@ -50,13 +50,29 @@
 
   <q-page-container>
     <q-page class="q-pa-md">
-      <div class="flex  column">
-        <div style="max-width: 210px;" class="text-center text-bold">
-          Выберите подразделение
+      <div class="flex flex-center">
+        <div style="width: 80%;" class="flex flex-center row justify-between">
+          <q-select style="max-width: 210px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
+          <q-btn label="Создать новый" class="bg-secondary text-white" style="height: 55px"/>
         </div>
-        <q-select style="max-width: 210px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
+        <q-card style="width: 80%;">
+          <q-table
+            :columns="columns"
+            :data="data"
+            row-key="name"
+            :title="tableName"
+          >
+            <template #top-right>
+              <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">
+                <template #append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </template>
+
+          </q-table>
+        </q-card>
       </div>
-        <EditReport class="q-mb-sm" v-for="index in 5" :key="index"/>
     </q-page>
   </q-page-container>
 </q-layout>
@@ -66,22 +82,28 @@
 import EditReport from "pages/EditReport";
 export default {
   name: "MainPage",
-  components: {EditReport},
   data() {
     return {
-      currentSubdivision: "Бухгалтерия",
-      allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
-      isLoading: false,
       filter: '',
-      columns: [
-        {name: 'lastname', required: true, label: 'Фамилия', align: 'left', field: 'lastname', sortable: true,},
-        {name: 'firstname', required: true, label: 'Имя', align: 'left', field: 'firstname', sortable: true},
-        {name: 'patronymic', required: true, label: 'Отчество', align: 'left', field: 'patronymic', sortable: true},
-        {name: 'position', required: true, label: 'Должность', align: 'left', field: 'position', sortable: true},
-        {name: 'subdivision', required: true, label: 'Подразделение', align: 'left', field: 'subdivision', sortable: true},
-        {name: 'phone', required: true, label: 'Телефон', align: 'left', field: 'phone', sortable: true},
+      currentSubdivision: 'Бухгалтерия',
+      allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
+      left: false,
+      tableName: 'Табели учета рабочего времени за текущий год',
+      data: [
+        {number: 1, date: '01.06', edit: 'Редактировать'},
+        {number: 2, date: '02.06', edit: 'Редактировать'},
+        {number: 3, date: '03.06', edit: 'Редактировать'},
+        {number: 4, date: '04.06', edit: 'Редактировать'},
+        {number: 5, date: '05.06', edit: 'Редактировать'},
+        {number: 6, date: '06.06', edit: 'Редактировать'},
+        {number: 7, date: '07.05', edit: 'Редактировать'},
+        {number: 8, date: '08.05', edit: 'Редактировать'},
       ],
-      employees: [],
+      columns: [
+        {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true,},
+        {name: 'date', required: true, label: 'Дата', align: 'left', field: 'date', sortable: true},
+        {name: 'edit', required: true, align: 'left', field: 'edit'},
+      ],
     }
   },
   mounted() {
