@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-grey-7 text-white">
       <q-toolbar>
         <q-btn flat round dense icon="arrow_back"  @click="$router.go(-1)"/>
 
@@ -48,6 +48,30 @@
 
     <q-page-container>
       <q-page>
+        <div class="flex row items-center justify-between q-ml-md q-ma-sm">
+          <div class="flex row items-center">
+            Дата составления
+            <q-input class="q-ml-md" filled v-model="date" mask="date" :rules="['date']">
+              <template #append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                    <q-date v-model="date" minimal>
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+            <div class="q-ml-md">
+              На год 2021
+            </div>
+          </div>
+          <div class="q-mr-md">
+            <q-btn class="bg-secondary text-white" label="Сохранить"/>
+          </div>
+        </div>
         <q-table
           title="Создание графика отпусков"
           :columns="columns"
@@ -115,6 +139,7 @@ export default {
   name: "VacationCard",
   data() {
     return {
+      date: '2019/02/01',
       columns: [
         {
           name: 'profession',
@@ -176,5 +201,8 @@ export default {
 <style >
 .q-table--no-wrap th, .q-table--no-wrap td {
   white-space: normal;
+}
+.q-field--with-bottom{
+  padding-bottom: 0;
 }
 </style>

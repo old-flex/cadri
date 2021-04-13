@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-grey-7 text-white">
       <q-toolbar>
         <q-btn flat round dense icon="arrow_back"  @click="$router.go(-1)"/>
 
@@ -11,12 +11,12 @@
             <q-menu fit>
               <q-list>
                 <q-item clickable v-close-popup>
-                  <q-item-section @click="$router.push('reportCard')">
-                    Табели на текущий год
+                  <q-item-section @click="$router.push('/')">
+                    Табели на текущий месяц
                   </q-item-section>
                 </q-item>
                 <q-item clickable v-close-popup>
-                  <q-item-section>
+                  <q-item-section @click="$router.push('/reportCard')">
                     Архив табелей
                   </q-item-section>
                 </q-item>
@@ -46,20 +46,13 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer class="bg-amber-4" show-if-above v-model="left" side="left" bordered>
-      <div class="flex justify-center items-center full-height column q-gutter-lg">
-        <q-btn class="full-width bg-secondary" @click="tableName = 'Табели учета рабочего времени за текущий год'" label="Текущий год"></q-btn>
-        <q-btn class="full-width bg-secondary" @click="tableName = 'Архив табелей учета рабочего времени'" label="Архив"></q-btn>
-      </div>
-    </q-drawer>
-
     <q-page-container>
       <q-page class="q-pa-md">
 
         <div class="flex flex-center">
-          <div style="width: 80%;" class="flex flex-center row justify-between">
-            <q-btn label="Создать новый" class="bg-amber-2" style="height: 55px"/>
-            <q-select style="max-width: 210px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
+          <div style="width: 80%;" class="flex items-center row">
+            Выберите подразделение
+            <q-select style="max-width: 210px; margin-left: 10px"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
           </div>
           <q-card style="width: 80%;">
             <q-table
@@ -68,13 +61,6 @@
               row-key="name"
               :title="tableName"
             >
-              <template #top-right>
-                <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">
-                  <template #append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-              </template>
 
             </q-table>
           </q-card>

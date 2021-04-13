@@ -1,6 +1,6 @@
 <template>
 <q-layout view="lHr lpR lFr">
-  <q-header elevated class="bg-primary text-white">
+  <q-header elevated class="bg-grey-7 text-white">
     <q-toolbar>
 
       <q-avatar>
@@ -13,12 +13,12 @@
           <q-menu fit>
             <q-list>
               <q-item clickable v-close-popup>
-                <q-item-section @click="$router.push('reportCard')">
+                <q-item-section @click="$router.push('/')">
                   Табели на текущий месяц
                 </q-item-section>
               </q-item>
               <q-item clickable v-close-popup>
-                <q-item-section>
+                <q-item-section @click="$router.push('/reportCard')">
                   Архив табелей
                 </q-item-section>
               </q-item>
@@ -52,8 +52,11 @@
     <q-page class="q-pa-md">
       <div class="flex flex-center">
         <div style="width: 80%;" class="flex flex-center row justify-between">
-          <q-select style="max-width: 210px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
-          <q-btn label="Создать новый" class="bg-secondary text-white" style="height: 55px"/>
+          <div class="flex items-center">
+            Выберите подразделение
+            <q-select style="width: 210px; margin-left: 10px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
+          </div>
+          <q-btn @click="$router.push('/editCard')" label="Создать новый" class="bg-secondary text-white" style="height: 55px"/>
         </div>
         <q-card style="width: 80%;">
           <q-table
@@ -62,14 +65,6 @@
             row-key="name"
             :title="tableName"
           >
-            <template #top-right>
-              <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">
-                <template #append>
-                  <q-icon name="search" />
-                </template>
-              </q-input>
-            </template>
-
           </q-table>
         </q-card>
       </div>
@@ -88,7 +83,7 @@ export default {
       currentSubdivision: 'Бухгалтерия',
       allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
       left: false,
-      tableName: 'Табели учета рабочего времени за текущий год',
+      tableName: 'Табели учета рабочего времени за текущий месяц',
       data: [
         {number: 1, date: '01.06', edit: 'Редактировать'},
         {number: 2, date: '02.06', edit: 'Редактировать'},

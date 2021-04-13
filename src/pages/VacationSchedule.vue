@@ -1,6 +1,6 @@
 <template>
 <q-layout view="hHh lpR fFf">
-<q-header elevated class="bg-primary text-white">
+<q-header elevated class="bg-grey-7 text-white">
   <q-toolbar>
     <q-btn flat round dense icon="arrow_back"  @click="$router.go(-1)"/>
 
