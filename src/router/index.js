@@ -25,6 +25,14 @@ export default function (/* { store, ssrContext } */) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
-
+  Router.beforeEach(function (to, _, next) {
+    let role = localStorage.getItem("role");
+    // console.log("router token here", token);
+    if(role === null && to.path !== "/login"){
+      next("/login");
+    } else {
+      next()
+    }
+  });
   return Router
 }

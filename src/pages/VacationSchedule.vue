@@ -1,53 +1,6 @@
 <template>
 <q-layout view="hHh lpR fFf">
-<q-header elevated class="bg-grey-7 text-white">
-  <q-toolbar>
-    <q-btn flat round dense icon="arrow_back"  @click="$router.go(-1)"/>
-
-    <q-toolbar-title>
-      Помощь кадрам
-
-      <q-btn style="margin-left: 40px" color="secondary" label="Табель" icon-right="expand_more">
-        <q-menu fit>
-          <q-list>
-            <q-item clickable v-close-popup>
-              <q-item-section @click="$router.push('reportCard')">
-                Табели на текущий год
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>
-                Архив табелей
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-
-      <q-btn style="margin-left: 40px" color="secondary" label="График отпусков" icon-right="expand_more">
-        <q-menu fit>
-          <q-list>
-            <q-item clickable v-close-popup>
-              <q-item-section>
-                Графики
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>
-                Печать
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-
-    </q-toolbar-title>
-    <q-btn flat round dense icon="logout" />
-  </q-toolbar>
-</q-header>
-
-
-
+<MainHeader/>
 <q-page-container>
   <q-page class="q-pa-md">
 
@@ -81,8 +34,10 @@
 </template>
 
 <script>
+import MainHeader from "components/MainHeader";
 export default {
 name: "VacationSchedule",
+  components: {MainHeader},
   data() {
     return {
       filter: '',

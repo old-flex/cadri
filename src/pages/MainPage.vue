@@ -1,53 +1,6 @@
 <template>
 <q-layout view="lHr lpR lFr">
-  <q-header elevated class="bg-grey-7 text-white">
-    <q-toolbar>
-
-      <q-avatar>
-        <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
-      </q-avatar>
-      <q-toolbar-title>
-
-        Помощь кадрам
-        <q-btn style="margin-left: 40px" color="secondary" label="Табель" icon-right="expand_more">
-          <q-menu fit>
-            <q-list>
-              <q-item clickable v-close-popup>
-                <q-item-section @click="$router.push('/')">
-                  Табели на текущий месяц
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section @click="$router.push('/reportCard')">
-                  Архив табелей
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-
-        <q-btn style="margin-left: 40px" color="secondary" label="График отпусков" icon-right="expand_more">
-          <q-menu fit>
-            <q-list>
-              <q-item clickable v-close-popup>
-                <q-item-section @click="$router.push({name: 'vacations'})">
-                  Графики
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section>
-                  Печать
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-
-      </q-toolbar-title>
-      <q-btn flat round dense icon="logout" />
-    </q-toolbar>
-  </q-header>
-
+  <MainHeader/>
   <q-page-container>
     <q-page class="q-pa-md">
       <div class="flex flex-center">
@@ -56,7 +9,7 @@
             Выберите подразделение
             <q-select style="width: 210px; margin-left: 10px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
           </div>
-          <q-btn @click="$router.push('/editCard')" label="Создать новый" class="bg-secondary text-white" style="height: 55px"/>
+          <q-btn @click="$router.push('/createReport')" label="Создать новый" class="bg-secondary text-white" style="height: 55px"/>
         </div>
         <q-card style="width: 80%;">
           <q-table
@@ -74,9 +27,11 @@
 </template>
 
 <script>
-import EditReport from "pages/EditReport";
+import EditReport from "pages/Reports/EditReport";
+import MainHeader from "components/MainHeader";
 export default {
   name: "MainPage",
+  components: {MainHeader},
   data() {
     return {
       filter: '',

@@ -24,7 +24,10 @@
               :rules="[ val => val && val.length > 0 || 'Пожалуйста, введите пароль']"
             />
 
-            <q-btn class="q-mt-md" label="Войти" @click="$router.push('/')" />
+            <q-btn class="q-mt-md" label="Войти" @click="auth()" />
+            <div style="min-height: 20px; margin-top: 10px;" class="text-red">
+              {{errMess}}
+            </div>
           </q-card>
         </div>
       </q-page>
@@ -39,6 +42,33 @@ name: "Login",
     return {
       login: '',
       password: '',
+      role: null,
+      errMess: '',
+    }
+  },
+  methods: {
+    async auth(){
+      this.errMess = '';
+      const response = await fetch('http://localhost:8080/api/login', {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({login: this.login, password: this.password})
+      })
+
+      const result = await response.json();
+
+      if(result.length > 0) {
+        this.role = result[0].role
+        localStorage.setItem('role', this.role)
+        if(this.role === 'report_operator') {
+          await this.$router.push('/createReport')
+        }
+      } else {
+        this.errMess = 'Такого пользователя не существует'
+      }
+      console.log(result)
     }
   }
 }
