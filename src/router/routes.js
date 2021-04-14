@@ -22,17 +22,22 @@ const routes = [
   {
     path: '/vacationSchedule',
     name: 'vacations',
-    component: () => import('../pages/VacationSchedule')
+    component: () => import('pages/Vacations/VacationSchedule')
   },
   {
     path: '/vacationCreate',
     name: 'vacationCreate',
-    component: () => import('../pages/VacationCard')
+    component: () => import('pages/Vacations/VacationCard')
   },
   {
     path: '/createReport',
     name: 'createReport',
     component: () => import('../pages/Reports/NewReport')
+  },
+  {
+    path:'/createVacationCard',
+    name: 'createVacationCard',
+    component: () => import('../pages/Vacations/NewVacationCard')
   },
   // Always leave this as last one,
   // but you can also remove it

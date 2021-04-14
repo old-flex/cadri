@@ -62,6 +62,11 @@ name: "Login",
       if(result.length > 0) {
         this.role = result[0].role
         localStorage.setItem('role', this.role)
+
+        if(this.role === 'vacation_operator'){
+          await this.$router.push('/createVacation')
+        }
+
         if(this.role === 'report_operator') {
           await this.$router.push('/createReport')
         }
