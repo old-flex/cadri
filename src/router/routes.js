@@ -15,7 +15,7 @@ const routes = [
     component: () => import('../pages/Login')
   },
   {
-    path: '/editCard',
+    path: '/editCard/:id',
     name: 'editCard',
     component: () => import('pages/Reports/EditReport')
   },

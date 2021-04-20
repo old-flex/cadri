@@ -6,42 +6,16 @@
         <div class="flex row items-center justify-between q-ml-md">
           <div class="flex row items-center">
             Месяц отчетного периода
-            <q-select style="width: 90px;" :options="mounth" v-model="test"/>
+            <q-select style="width: 90px;" :options="month" v-model="test"/>
           </div>
           <div class="q-mr-md">
-            <q-btn class="bg-secondary text-white" label="Сохранить"/>
+            <q-btn class="bg-secondary text-white" label="Сохранить" @click="editReport"/>
           </div>
         </div>
         <div class="q-mt-md q-ml-md">
-          Отдел: Бухгатлтерия
+          Отдел: {{report[0].name}}
         </div>
-        <q-markup-table class="q-mt-md"  separator="cell" flat bordered dense>
-          <tbody >
-          <tr>
-            <td rowspan="2" class="text-center">Фамилия, <div>инициалы,</div> <div>должность</div></td>
-            <td  rowspan="2" class="text-center">Табельный <div>номер</div></td>
-            <td  colspan="31" class="text-center">Отметки о явках и неявках</td>
-          </tr>
-          <tr>
-            <td class="text-center" v-for="index in 31" :key="index">
-              {{ index }}
-            </td>
-          </tr>
-          <tr>
-            <td rowspan="2"  class="text-center">Витя Петров, <p>инженер</p></td>
-            <td rowspan="2"  class="text-center">1123</td>
-            <td  v-for="index in 31" :key="index">
-              <q-select borderless dense v-model="model[index]" :options="options"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center" v-for="index in 31" :key="index">
-              8
-            </td>
-          </tr>
-          </tbody>
-
-        </q-markup-table>
+        <EditReportComponent v-for="string in strings" :data="string" :trigger="trigger" :key="string.id"/>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -49,17 +23,68 @@
 
 <script>
 import MainHeader from "components/MainHeader";
+import ReportTableComponent from "pages/Reports/ReportTableComponent";
+import EditReportComponent from "pages/Reports/EditReportComponent";
 export default {
 name: "EditReport",
-  components: {MainHeader},
+  components: {EditReportComponent, MainHeader},
   data () {
     return {
       model: ["Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я"],
       options: [
         'Я', 'Н', 'Б', 'ОО', 'ГГ'
       ],
-      mounth: ["Январь", "Февраль", "Март"],
+      month: ["Январь", "Февраль", "Март", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
       test: null,
+      report: null,
+      strings: null,
+      trigger: 0
+    }
+  },
+  methods: {
+    async editReport() {
+      let month_end = this.month.indexOf(this.test)
+      if(month_end === 12){
+        month_end = 0
+      }
+      const actionPayload = {
+        date_end: this.month[month_end],
+        id: this.id
+      }
+      console.log(actionPayload)
+      const response = await fetch('http://localhost:8080/api/editReport', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(actionPayload)
+      });
+      this.trigger += 1
+      // this.reportId = await response.json();
+      // await this.$router.push('/')
+    }
+  },
+  computed: {
+    id() {
+      return this.$route.params.id
+    }
+  },
+  async mounted() {
+    try {
+      let response = await fetch(`http://localhost:8080/api/getReportForEditing/${this.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body:
+          JSON.stringify({id: this.id})
+      });
+      response = await response.json()
+      this.report = response.report
+      this.strings = response.strings
+      this.test = this.report[0].date_end
+    } catch (err) {
+      console.log(err)
     }
   }
 }

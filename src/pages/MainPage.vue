@@ -17,6 +17,7 @@
             :data="data"
             row-key="name"
             :title="tableName"
+            @row-click="onRowClick"
           >
           </q-table>
         </q-card>
@@ -35,37 +36,46 @@ export default {
   data() {
     return {
       filter: '',
-      currentSubdivision: 'Бухгалтерия',
-      allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
+      currentSubdivision: null,
       left: false,
       tableName: 'Табели учета рабочего времени за текущий месяц',
-      data: [
-        {number: 1, date: '01.06', edit: 'Редактировать'},
-        {number: 2, date: '02.06', edit: 'Редактировать'},
-        {number: 3, date: '03.06', edit: 'Редактировать'},
-        {number: 4, date: '04.06', edit: 'Редактировать'},
-        {number: 5, date: '05.06', edit: 'Редактировать'},
-        {number: 6, date: '06.06', edit: 'Редактировать'},
-        {number: 7, date: '07.05', edit: 'Редактировать'},
-        {number: 8, date: '08.05', edit: 'Редактировать'},
-      ],
+      data: [],
       columns: [
         {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true,},
-        {name: 'date', required: true, label: 'Дата', align: 'left', field: 'date', sortable: true},
+        {name: 'date_start', required: true, label: 'Дата начала', align: 'left', field: 'date_start', sortable: true},
+        {name: 'date_end', required: true, label: 'Дата окончания', align: 'left', field: 'date_end', sortable: true},
         {name: 'edit', required: true, align: 'left', field: 'edit'},
       ],
     }
   },
-  mounted() {
-    this.getUsers();
+  watch: {
+    currentSubdivision: function(newVal) {
+      this.getReports();
+    }
   },
   methods: {
-    async getUsers() {
+    async onRowClick(evt, row) {
+      await this.$router.push({
+        name: 'editCard',
+        params: {id: row.id}
+      })
+
+    },
+    async getReports() {
        this.isLoading = true;
+       this.data = []
        try {
-         const response = await fetch('http://localhost:8080/api/users');
-         this.employees = await response.json();
-         console.log(this.employees);
+         const response = await fetch('http://localhost:8080/api/getReports');
+         this.data = await response.json();
+         this.data = this.data.filter((d) => {
+           return d.subdivision_id === this.currentSubdivision.id
+         })
+         this.data = this.data.map((d) => {
+           return {
+             ...d,
+             edit: 'Редактировать'
+           }
+         })
        } catch (err) {
          console.log(err)
        }
@@ -74,10 +84,12 @@ export default {
   },
   computed: {
     filterEmployees() {
-      console.log(123)
       return this.employees.filter((e) => {
         return e.subdivision === this.currentSubdivision;
       })
+    },
+    allSubdivisions(){
+      return this.$store.getters['data/subdivisions']
     }
   }
 }
