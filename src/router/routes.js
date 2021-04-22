@@ -39,6 +39,11 @@ const routes = [
     name: 'createVacationCard',
     component: () => import('../pages/Vacations/NewVacationCard')
   },
+  {
+    path: '/editVacation/:id',
+    name: 'editVacation',
+    component: () => import('../pages/Vacations/EditVacation')
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

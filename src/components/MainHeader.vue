@@ -27,7 +27,7 @@
           <q-menu fit>
             <q-list>
               <q-item clickable v-close-popup>
-                <q-item-section @click="$router.push({name: 'vacations'})">
+                <q-item-section @click="$router.push('/')">
                   Графики
                 </q-item-section>
               </q-item>

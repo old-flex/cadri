@@ -34,26 +34,8 @@ name: "ReportCard",
   components: {MainHeader},
   data() {
     return {
-      filter: '',
       currentSubdivision: 'Бухгалтерия',
       allSubdivisions: ['Бухгалтерия', 'Учебный отдел', 'Отдел кадров'],
-      left: false,
-      tableName: 'Табели учета рабочего времени за текущий год',
-      data: [
-        {number: 1, date: '01.06', edit: 'Редактировать'},
-        {number: 2, date: '02.06', edit: 'Редактировать'},
-        {number: 3, date: '03.06', edit: 'Редактировать'},
-        {number: 4, date: '04.06', edit: 'Редактировать'},
-        {number: 5, date: '05.06', edit: 'Редактировать'},
-        {number: 6, date: '06.06', edit: 'Редактировать'},
-        {number: 7, date: '07.05', edit: 'Редактировать'},
-        {number: 8, date: '08.05', edit: 'Редактировать'},
-      ],
-      columns: [
-        {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true,},
-        {name: 'date', required: true, label: 'Дата', align: 'left', field: 'date', sortable: true},
-        {name: 'edit', required: true, align: 'left', field: 'edit'},
-      ],
     }
   }
 }

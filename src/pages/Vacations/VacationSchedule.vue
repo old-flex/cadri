@@ -23,7 +23,6 @@
               </template>
             </q-input>
           </template>
-
         </q-table>
       </q-card>
     </div>
