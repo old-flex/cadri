@@ -25,6 +25,12 @@
             <div class="flex row items-center">
               Месяц отчетного периода:
               <q-select style="margin-left: 20px; width: 90px" :options="month" v-model="currentMonth"/>
+              <div class="q-ml-lg">
+                Номер документа
+              </div>
+              <div class="q-ml-md text-center">
+                <q-input v-model="reportNumber" />
+              </div>
             </div>
             <div class="q-mr-md">
               <q-btn @click="saveReport" class="bg-secondary text-white" label="Сохранить"/>
@@ -51,6 +57,7 @@ export default {
       isMonthAndSubdivisionSelected: false,
       currentMonth: null,
       subdivision: null,
+      reportNumber: null,
       month: ["Январь", "Февраль", "Март", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
       isLoading: false,
       employees: [],
@@ -70,7 +77,7 @@ export default {
         month_end = 0
       }
       const actionPayload = {
-        number: 123,
+        number: this.reportNumber,
         date_start: this.currentMonth,
         date_end: this.month[month_end],
         subdivision_id: this.subdivision.id

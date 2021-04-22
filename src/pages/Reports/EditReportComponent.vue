@@ -1,5 +1,5 @@
 <template>
-  <q-markup-table class="q-mt-md"  separator="cell" flat bordered dense>
+  <q-markup-table class="q-mt-md q-ma-lg"  separator="cell" flat bordered dense>
     <tbody>
     <tr>
       <td rowspan="2" class="text-center">Фамилия, <div>инициалы,</div> <div>должность</div></td>
@@ -12,8 +12,8 @@
       </td>
     </tr>
     <tr>
-      <td rowspan="2"  class="text-center">{{employee.firstname}} {{employee.lastname}}, <p>{{employee.position}}</p></td>
-      <td rowspan="2"  class="text-center">{{employee.passport_series}}</td>
+      <td rowspan="2" style="max-width: 35px; white-space: pre-line" class="text-center">{{employee.firstname}} {{employee.lastname}}<p>{{employee.position}}</p></td>
+      <td rowspan="2" style="max-width: 35px;"  class="text-center">{{employee.passport_series}}</td>
       <td  v-for="index in 31" :key="index">
         <q-select borderless dense v-model="model[index - 1]" :options="options" emit-value map-options/>
       </td>
@@ -55,6 +55,8 @@ export default {
         },
         body: JSON.stringify(actionPayload)
       });
+      await this.$router.push('/')
+
     }
   },
   created() {
@@ -66,6 +68,7 @@ export default {
       firstname: this.data.firstname,
       lastname: this.data.lastname,
       passport_series: this.data.passport_series,
+      rate: this.data.rate,
       position: this.data.position
     }
   },
@@ -85,6 +88,9 @@ export default {
 </script>
 
 <style>
+td{
+  min-width: 20px;
+}
 .q-field__append.q-field__marginal.row.no-wrap.items-center.q-anchor--skip{
   display: none;
 }
@@ -115,6 +121,9 @@ th {
 }
 .q-markup-table{
   overflow: hidden;
+}
+.q-table--dense .q-table thead tr, .q-table--dense .q-table tbody tr, .q-table--dense .q-table tbody td {
+  height: 20px;
 }
 @media (max-width:1300px) {
   table{

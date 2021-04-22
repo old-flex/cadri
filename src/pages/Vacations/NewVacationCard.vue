@@ -50,7 +50,8 @@
           title="Создание графика отпусков"
           :columns="columns"
           :data="data"
-          :rows-per-page-options="[ 100 ]"
+          class="q-ma-xl"
+          :rows-per-page-options="[0]"
           row-key="name"
         >
           <template #body="props">
@@ -69,7 +70,7 @@
               </q-td>
               <q-td key="planned" :props="props">
                 {{ props.row.planned }}
-                <q-popup-edit v-model.number="props.row.planned">
+                <q-popup-edit  v-model.number="props.row.planned" auto-save>
                   <q-input filled v-model="props.row.planned" mask="date" :rules="['date']">
                     <template #append>
                       <q-icon name="event" class="cursor-pointer">
@@ -87,25 +88,49 @@
               </q-td>
               <q-td key="fact" :props="props">
                 {{ props.row.fact }}
-                <q-popup-edit v-model.number="props.row.fact">
-                  <q-date type="number" v-model="props.row.fact"  minimal />
+                <q-popup-edit v-model.number="props.row.fact" auto-save>
+                  <q-input filled v-model="props.row.fact" mask="date" :rules="['date']">
+                    <template #append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                          <q-date v-model="props.row.fact">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
                 </q-popup-edit>
               </q-td>
               <q-td key="moving" :props="props">
                 {{ props.row.moving }}
-                <q-popup-edit v-model="props.row.moving">
+                <q-popup-edit v-model="props.row.moving" auto-save>
                   <q-input v-model="props.row.moving" dense autofocus />
                 </q-popup-edit>
               </q-td>
               <q-td key="movingDate" :props="props">
                 {{ props.row.movingDate }}
-                <q-popup-edit v-model="props.row.movingDate">
-                  <q-date v-model="props.row.movingDate" minimal />
+                <q-popup-edit v-model.number="props.row.movingDate" auto-save>
+                  <q-input filled v-model="props.row.movingDate" mask="date" :rules="['date']">
+                    <template #append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                          <q-date v-model="props.row.movingDate">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
                 </q-popup-edit>
               </q-td>
               <q-td key="additionalFacts" :props="props">
                 {{ props.row.additionalFacts }}
-                <q-popup-edit v-model="props.row.additionalFacts">
+                <q-popup-edit v-model="props.row.additionalFacts" auto-save>
                   <q-input v-model="props.row.additionalFacts" dense autofocus />
                 </q-popup-edit>
               </q-td>
@@ -135,19 +160,20 @@ export default {
         {
           name: 'profession',
           field: "profession",
-          required: true,
-          label: 'Должность по штатному расписанию',
+          label: 'Должность',
+          style: 'max-width: 10px',
           align: 'center',
-          sortable: true
+          sortable: true,
+          headerStyle: 'max-width: 80px'
         },
-        { name: 'fio', field: 'fio',  label: 'ФИО', align: 'center', sortable: true },
-        { name: 'number', field: 'number', label: 'Табельный номер', align: 'center', sortable: true },
-        { name: 'daysAmount', field: 'daysAmount', label: 'Количество календарных дней отпуска', align: 'center', },
-        { name: 'planned', field: 'planned', align: 'center', label: 'Запланированная дата' },
-        { name: 'fact', field: 'fact', align: 'center', label: 'Фактическая дата' },
-        { name: 'moving', field: 'moving', align: 'center', label: 'Основание на перенесение', sortable: true  },
-        { name: 'movingDate', field: 'movingDate', align: 'center', label: 'Дата предполагаемого отпуска', sortable: true },
-        { name: 'additionalFacts', field: 'additionalFacts', align: 'center', label: 'Примечание', sortable: true }
+        { name: 'fio', field: 'fio',  label: 'ФИО', align: 'center', sortable: true, style: 'white-space: pre-line', headerStyle: 'max-width: 120px'},
+        { name: 'number', field: 'number', label: 'Табельный номер', align: 'center', sortable: true, style: '',  headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'daysAmount', field: 'daysAmount', label: 'Количество календарных дней отпуска', align: 'center',style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'planned', field: 'planned', align: 'center', label: 'Запланированная дата',style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'fact', field: 'fact', align: 'center', label: 'Фактическая дата',style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'moving', field: 'moving', align: 'center', label: 'Основание на перенесение', sortable: true,style: '',  headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'movingDate', field: 'movingDate', align: 'center', label: 'Дата предполагаемого отпуска', sortable: true,style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'additionalFacts', field: 'additionalFacts', align: 'center', label: 'Примечание', sortable: true,style: 'max-width: 100px; white-space: pre-line', headerStyle: 'max-width: 100px; white-space: pre-line'}
       ],
       data: []
     }
@@ -235,6 +261,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+ .q-table th, .q-table-td {
+   padding: 4px 0;
+ }
 </style>

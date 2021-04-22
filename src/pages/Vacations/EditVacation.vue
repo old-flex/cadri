@@ -22,6 +22,12 @@
               <div class="q-ml-md">
                 На год: {{nextYear}}
               </div>
+              <div class="q-ml-md">
+                Номер документа
+              </div>
+              <div class="q-ml-md text-center">
+                <q-input v-model="cardNumber" />
+              </div>
             </div>
             <div class="q-mr-md">
               <q-btn class="bg-secondary text-white" label="Сохранить" @click="saveVacation"/>
@@ -47,37 +53,70 @@
                 </q-td>
                 <q-td key="daysAmount" :props="props">
                   {{ props.row.daysAmount }}
-                  <q-popup-edit v-model.number="props.row.daysAmount">
-                    <q-input type="number" v-model.number="props.row.daysAmount" dense autofocus />
-                  </q-popup-edit>
                 </q-td>
                 <q-td key="planned" :props="props">
                   {{ props.row.planned }}
-                  <q-popup-edit v-model.number="props.row.planned">
-                    <q-date v-model="props.row.planned" minimal />
+                  <q-popup-edit  v-model.number="props.row.planned" auto-save>
+                    <q-input filled v-model="props.row.planned" mask="date" :rules="['date']">
+                      <template #append>
+                        <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                            <q-date v-model="props.row.planned">
+                              <div class="row items-center justify-end">
+                                <q-btn v-close-popup label="Close" color="primary" flat />
+                              </div>
+                            </q-date>
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
                   </q-popup-edit>
                 </q-td>
                 <q-td key="fact" :props="props">
                   {{ props.row.fact }}
-                  <q-popup-edit v-model.number="props.row.fact">
-                    <q-date type="number" v-model="props.row.fact"  minimal />
+                  <q-popup-edit  v-model.number="props.row.fact" auto-save>
+                    <q-input filled v-model="props.row.fact" mask="date" :rules="['date']">
+                      <template #append>
+                        <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                            <q-date v-model="props.row.fact">
+                              <div class="row items-center justify-end">
+                                <q-btn v-close-popup label="Close" color="primary" flat />
+                              </div>
+                            </q-date>
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
                   </q-popup-edit>
                 </q-td>
                 <q-td key="moving" :props="props">
                   {{ props.row.moving }}
-                  <q-popup-edit v-model="props.row.moving">
+                  <q-popup-edit v-model="props.row.moving" auto-save>
                     <q-input v-model="props.row.moving" dense autofocus />
                   </q-popup-edit>
                 </q-td>
                 <q-td key="movingDate" :props="props">
                   {{ props.row.movingDate }}
-                  <q-popup-edit v-model="props.row.movingDate">
-                    <q-date v-model="props.row.movingDate" minimal />
+                  <q-popup-edit  v-model.number="props.row.movingDate" auto-save>
+                    <q-input filled v-model="props.row.movingDate" mask="date" :rules="['date']">
+                      <template #append>
+                        <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                            <q-date v-model="props.row.movingDate">
+                              <div class="row items-center justify-end">
+                                <q-btn v-close-popup label="Close" color="primary" flat />
+                              </div>
+                            </q-date>
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
                   </q-popup-edit>
                 </q-td>
                 <q-td key="additionalFacts" :props="props">
                   {{ props.row.additionalFacts }}
-                  <q-popup-edit v-model="props.row.additionalFacts">
+                  <q-popup-edit v-model="props.row.additionalFacts" auto-save>
                     <q-input v-model="props.row.additionalFacts" dense autofocus />
                   </q-popup-edit>
                 </q-td>
@@ -100,6 +139,7 @@ export default {
       subdivision: null,
       isLoading: false,
       cardId: null,
+      cardNumber: null,
       date: '',
       columns: [
         {
@@ -147,6 +187,7 @@ export default {
       });
       response = await response.json()
       this.date = response.report[0].date_start
+      this.cardNumber = response.report[0].number
       this.data = response.strings.map((str) =>{
         return{
           profession: str.position,
@@ -173,7 +214,8 @@ export default {
     async saveVacation() {
       const actionPayload = {
         date_start: this.date,
-        id: this.id
+        number: this.cardNumber,
+        id: this.id,
       }
 
       const response = await fetch('http://192.168.1.188:8080/api/updateVacation', {
@@ -205,6 +247,7 @@ export default {
           body: JSON.stringify(payload)
         });
       }
+      await this.$router.push('/')
     },
     async getUsersBySubdivision() {
       this.isLoading = true;

@@ -3,20 +3,20 @@
   <MainHeader/>
   <q-page-container>
     <q-page class="q-pa-md">
-      <div class="flex flex-center" v-if="role === 'report_operator'">
-        <div style="width: 80%;" class="flex flex-center row justify-between">
+      <div class="flex flex-center column"  v-if="role === 'report_operator'">
+        <div style="width: 60%;" class="flex flex-center row justify-around">
           <div class="flex items-center">
             Выберите подразделение
             <q-select style="width: 210px; margin-left: 10px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
           </div>
           <q-btn @click="$router.push('/createReport')" label="Создать новый" class="bg-secondary text-white" style="height: 55px"/>
         </div>
-        <q-card style="width: 80%;">
+        <q-card style="width: 45%;">
           <q-table
             :columns="columns"
             :data="data"
             row-key="name"
-            title="Табели учета рабочего времени за текущий месяц"
+            title="Табели учета рабочего времени"
             @row-click="onRowClick"
             :rows-per-page-options="[0]"
           >
@@ -68,9 +68,9 @@ export default {
       left: false,
       data: [],
       columns: [
-        {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true,},
-        {name: 'date_start', required: true, label: 'Дата начала', align: 'left', field: 'date_start', sortable: true},
-        {name: 'edit', required: true, align: 'left', field: 'edit'},
+        {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true, style: 'width: 20px'},
+        {name: 'date_start', required: true, label: 'Дата начала', align: 'left', field: 'date_start', sortable: true, style: 'width: 40px'},
+        {name: 'edit', required: true, align: 'left', field: 'edit', style: 'width: 30px'},
       ],
     }
   },

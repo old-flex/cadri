@@ -15,8 +15,8 @@
                 </q-item-section>
               </q-item>
               <q-item clickable v-close-popup>
-                <q-item-section @click="$router.push('/reportCard')">
-                  Архив табелей
+                <q-item-section>
+                  Печать
                 </q-item-section>
               </q-item>
             </q-list>
