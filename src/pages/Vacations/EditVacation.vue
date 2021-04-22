@@ -149,7 +149,7 @@ export default {
       this.date = response.report[0].date_start
       this.data = response.strings.map((str) =>{
         return{
-          profession: 'Инженер',
+          profession: str.position,
           fio: `${str.lastname} ${str.firstname} ${str.patronymic}`,
           number: str.passport_number,
           daysAmount: str.calendar_days_of_vacation,
@@ -221,7 +221,7 @@ export default {
       console.log(this.employees)
       this.data = this.employees.map((e) => {
         return {
-          profession: 'Инженер',
+          profession: e.position,
           fio: `${e.lastname} ${e.firstname} ${e.patronymic}`,
           number: e.passport_number,
           id: e.id

@@ -205,7 +205,7 @@ export default {
       console.log(this.employees)
       this.data = this.employees.map((e) => {
         return {
-          profession: 'Инженер',
+          profession: e.position,
           fio: `${e.lastname} ${e.firstname} ${e.patronymic}`,
           number: e.passport_number,
           id: e.id

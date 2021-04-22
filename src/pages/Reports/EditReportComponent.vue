@@ -12,7 +12,7 @@
       </td>
     </tr>
     <tr>
-      <td rowspan="2"  class="text-center">{{employee.firstname}} {{employee.lastname}}, <p>инженер</p></td>
+      <td rowspan="2"  class="text-center">{{employee.firstname}} {{employee.lastname}}, <p>{{employee.position}}</p></td>
       <td rowspan="2"  class="text-center">{{employee.passport_series}}</td>
       <td  v-for="index in 31" :key="index">
         <q-select borderless dense v-model="model[index - 1]" :options="options"/>
