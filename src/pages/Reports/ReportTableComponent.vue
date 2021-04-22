@@ -15,12 +15,14 @@
       <td rowspan="2"  class="text-center">{{employee.firstname}} {{employee.lastname}}, <p>{{employee.position}}</p></td>
       <td rowspan="2"  class="text-center">{{employee.passport_series}}</td>
       <td  v-for="index in 31" :key="index">
-        <q-select borderless dense v-model="model[index - 1]" :options="options"/>
+        <q-select borderless dense v-model="model[index - 1]" :options="options" emit-value map-options/>
       </td>
     </tr>
     <tr>
       <td class="text-center" v-for="index in 31" :key="index">
-        8
+        <div v-if="model[index - 1] === 'Я'">
+          {{8 * employee.rate}}
+        </div>
       </td>
     </tr>
     </tbody>
@@ -47,7 +49,7 @@ export default {
         user_id: this.employee.id,
         report_card_id: this.reportId
       }
-      const response = await fetch('http://localhost:8080/api/createNewReportString', {
+      const response = await fetch('http://192.168.1.188:8080/api/createNewReportString', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,12 +58,14 @@ export default {
       });
     }
   },
+  computed: {
+    options() {
+      return this.$store.getters['data/marks']
+    }
+  },
   data() {
     return {
       model: ["Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я", "Я"],
-      options: [
-        'Я', 'Н', 'Б', 'ОО', 'ГГ'
-      ],
     }
   }
 }

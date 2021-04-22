@@ -83,18 +83,6 @@ export default {
         body: JSON.stringify(actionPayload)
       });
       this.reportId = await response.json();
-      await this.$router.push('/')
-    },
-    async getSubdivisions(){
-      console.log()
-      const response = await fetch('http://localhost:8080/api/getSubdivisions');
-      this.subdivisions = await response.json();
-      this.subdivisions = this.subdivisions.map((s) => {
-        return{
-          ...s,
-          label: s.name
-        }
-      });
     },
     getTables() {
       this.isMonthAndSubdivisionSelected = true;

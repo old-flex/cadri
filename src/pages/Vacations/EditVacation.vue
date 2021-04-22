@@ -137,7 +137,7 @@ export default {
   },
   async mounted() {
     try {
-      let response = await fetch(`http://localhost:8080/api/getVacationForEditing/${this.id}`, {
+      let response = await fetch(`http://192.168.1.188:8080/api/getVacationForEditing/${this.id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -176,7 +176,7 @@ export default {
         id: this.id
       }
 
-      const response = await fetch('http://localhost:8080/api/updateVacation', {
+      const response = await fetch('http://192.168.1.188:8080/api/updateVacation', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -197,7 +197,7 @@ export default {
 
         console.log(payload)
 
-        await fetch('http://localhost:8080/api/updateVacationString', {
+        await fetch('http://192.168.1.188:8080/api/updateVacationString', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -209,7 +209,7 @@ export default {
     async getUsersBySubdivision() {
       this.isLoading = true;
       try {
-        const response = await fetch('http://localhost:8080/api/users');
+        const response = await fetch('http://192.168.1.188:8080/api/users');
         this.employees = await response.json();
         this.employees = this.employees.filter((e) => {
           return e.subdivision_id === this.subdivision.id;

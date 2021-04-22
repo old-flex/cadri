@@ -20,6 +20,8 @@
               v-model="password"
               label="Введите пароль"
               hint="Ваш пароль"
+              type="password"
+              @keydown.enter.prevent="auth"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Пожалуйста, введите пароль']"
             />

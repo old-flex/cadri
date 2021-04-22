@@ -35,6 +35,12 @@
             <div class="q-ml-md">
               На год: {{nextYear}}
             </div>
+            <div class="q-ml-md">
+              Номер документа
+            </div>
+            <div class="q-ml-md text-center">
+              <q-input v-model="cardNumber" />
+            </div>
           </div>
           <div class="q-mr-md">
             <q-btn class="bg-secondary text-white" label="Сохранить" @click="saveCard"/>
@@ -60,14 +66,23 @@
               </q-td>
               <q-td key="daysAmount" :props="props">
                 {{ props.row.daysAmount }}
-                <q-popup-edit v-model.number="props.row.daysAmount">
-                  <q-input type="number" v-model.number="props.row.daysAmount" dense autofocus />
-                </q-popup-edit>
               </q-td>
               <q-td key="planned" :props="props">
                 {{ props.row.planned }}
                 <q-popup-edit v-model.number="props.row.planned">
-                  <q-date v-model="props.row.planned" minimal />
+                  <q-input filled v-model="props.row.planned" mask="date" :rules="['date']">
+                    <template #append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                          <q-date v-model="props.row.planned">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
                 </q-popup-edit>
               </q-td>
               <q-td key="fact" :props="props">
@@ -113,6 +128,7 @@ export default {
       isSubdivisionSelected: false,
       subdivision: null,
       isLoading: false,
+      cardNumber: null,
       cardId: null,
       date: '',
       columns: [
@@ -153,13 +169,13 @@ export default {
     },
     async saveCard() {
       const actionPayload = {
-        number: 123,
+        number: this.cardNumber,
         date_start: this.date,
         date_end: this.nextYear,
         subdivision_id: this.subdivision.id
       }
 
-      const response = await fetch('http://localhost:8080/api/createNewVacation', {
+      const response = await fetch('http://192.168.1.188:8080/api/createNewVacation', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -181,7 +197,7 @@ export default {
           appendix: employee.additionalFacts
         }
 
-        await fetch('http://localhost:8080/api/createNewVacationString', {
+        await fetch('http://192.168.1.188:8080/api/createNewVacationString', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -189,11 +205,13 @@ export default {
           body: JSON.stringify(payload)
         });
       }
+
+      await this.$router.push('/')
     },
     async getUsersBySubdivision() {
       this.isLoading = true;
       try {
-        const response = await fetch('http://localhost:8080/api/users');
+        const response = await fetch('http://192.168.1.188:8080/api/users');
         this.employees = await response.json();
         this.employees = this.employees.filter((e) => {
           return e.subdivision_id === this.subdivision.id;
@@ -208,7 +226,8 @@ export default {
           profession: e.position,
           fio: `${e.lastname} ${e.firstname} ${e.patronymic}`,
           number: e.passport_number,
-          id: e.id
+          id: e.id,
+          daysAmount: e.additional_days + e.plan_days + e.year_before_last_days + e.last_year_days
         }
       })
     }
