@@ -30,7 +30,8 @@
               </div>
             </div>
             <div class="q-mr-md">
-              <q-btn class="bg-secondary text-white" label="Сохранить" @click="saveVacation"/>
+              <q-btn class="bg-secondary text-white" label="Печать" @click="test"/>
+              <q-btn class="bg-secondary text-white q-ml-lg" label="Сохранить" @click="saveVacation"/>
             </div>
           </div>
           <q-table
@@ -141,23 +142,26 @@ export default {
       cardId: null,
       cardNumber: null,
       date: '',
+      org: null,
+      nextYear: null,
       columns: [
         {
           name: 'profession',
           field: "profession",
-          required: true,
-          label: 'Должность по штатному расписанию',
+          label: 'Должность',
+          style: 'max-width: 10px',
           align: 'center',
-          sortable: true
+          sortable: true,
+          headerStyle: 'max-width: 80px'
         },
-        { name: 'fio', field: 'fio',  label: 'ФИО', align: 'center', sortable: true },
-        { name: 'number', field: 'number', label: 'Табельный номер', align: 'center', sortable: true },
-        { name: 'daysAmount', field: 'daysAmount', label: 'Количество календарных дней отпуска', align: 'center', },
-        { name: 'planned', field: 'planned', align: 'center', label: 'Запланированная дата' },
-        { name: 'fact', field: 'fact', align: 'center', label: 'Фактическая дата' },
-        { name: 'moving', field: 'moving', align: 'center', label: 'Основание на перенесение', sortable: true  },
-        { name: 'movingDate', field: 'movingDate', align: 'center', label: 'Дата предполагаемого отпуска', sortable: true },
-        { name: 'additionalFacts', field: 'additionalFacts', align: 'center', label: 'Примечание', sortable: true }
+        { name: 'fio', field: 'fio',  label: 'ФИО', align: 'center', sortable: true, style: 'white-space: pre-line', headerStyle: 'max-width: 120px'},
+        { name: 'number', field: 'number', label: 'Табельный номер', align: 'center', sortable: true, style: '',  headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'daysAmount', field: 'daysAmount', label: 'Количество календарных дней отпуска', align: 'center',style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'planned', field: 'planned', align: 'center', label: 'Запланированная дата',style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'fact', field: 'fact', align: 'center', label: 'Фактическая дата',style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'moving', field: 'moving', align: 'center', label: 'Основание на перенесение', sortable: true,style: '',  headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'movingDate', field: 'movingDate', align: 'center', label: 'Дата предполагаемого отпуска', sortable: true,style: '', headerStyle: 'max-width: 100px; white-space: pre-line'},
+        { name: 'additionalFacts', field: 'additionalFacts', align: 'center', label: 'Примечание', sortable: true,style: 'max-width: 100px; white-space: pre-line', headerStyle: 'max-width: 100px; white-space: pre-line'}
       ],
       data: []
     }
@@ -165,11 +169,6 @@ export default {
   computed: {
     subdivisions() {
       return this.$store.getters['data/subdivisions']
-    },
-    nextYear() {
-      let today = new Date();
-      let year = today.getFullYear();
-      return year + 1
     },
     id() {
       return this.$route.params.id
@@ -188,6 +187,9 @@ export default {
       response = await response.json()
       this.date = response.report[0].date_start
       this.cardNumber = response.report[0].number
+      this.nextYear = response.report[0].date_end
+      this.subdivision = response.report[0].name
+      this.org = response.org
       this.data = response.strings.map((str) =>{
         return{
           profession: str.position,
@@ -207,6 +209,22 @@ export default {
     }
   },
   methods: {
+    test() {
+      fetch('http://127.0.0.1:5000/createXml', {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          org: this.org,
+          date_end: this.nextYear,
+          number: this.cardNumber,
+          date_start: this.date,
+          data: this.data,
+          subdivision: this.subdivision
+        })
+      })
+    },
     getTables() {
       this.isSubdivisionSelected = true;
       this.getUsersBySubdivision()
@@ -275,6 +293,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.q-table th, .q-table-td {
+  padding: 4px 4px;
+}
 </style>
