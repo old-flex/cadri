@@ -114,8 +114,8 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `front_helper`,
-        short_name: `front_helper`,
+        name: `Помощь кадрам`,
+        short_name: `Помощь кадрам`,
         description: `Front helper`,
         display: 'standalone',
         orientation: 'portrait',
