@@ -15,6 +15,7 @@
             </div>
           </div>
           <div class="q-mr-md">
+            <q-btn class="bg-secondary text-white" label="Печать" @click="createXls"/>
             <q-btn class="bg-secondary text-white" label="Сохранить" @click="editReport"/>
           </div>
         </div>
@@ -50,6 +51,18 @@ export default {
     }
   },
   methods: {
+    async createXls() {
+      console.log(this.strings)
+      await fetch('http://127.0.0.1:5000/createXmlOrder',{
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          employees: this.strings
+        })
+      } )
+    },
     async editReport() {
       let month_end = this.month.indexOf(this.test)
       if (month_end === 12) {
