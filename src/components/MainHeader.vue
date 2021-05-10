@@ -1,7 +1,7 @@
 <template>
   <q-header elevated class="bg-grey-7 text-white">
     <q-toolbar>
-      <q-btn flat round dense icon="arrow_back"  @click="$router.go(-1)"/>
+      <q-btn flat round dense icon="arrow_back"  @click="$router.push('/')"/>
 
       <q-toolbar-title>
         Помощь кадрам
@@ -14,11 +14,11 @@
                   Табели на текущий месяц
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section @click="test">
-                  Печать
-                </q-item-section>
-              </q-item>
+<!--              <q-item clickable v-close-popup>-->
+<!--                <q-item-section @click="test">-->
+<!--                  Печать-->
+<!--                </q-item-section>-->
+<!--              </q-item>-->
             </q-list>
           </q-menu>
         </q-btn>
@@ -31,11 +31,11 @@
                   Графики
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section @click="test">
-                  Печать
-                </q-item-section>
-              </q-item>
+<!--              <q-item clickable v-close-popup>-->
+<!--                <q-item-section @click="test">-->
+<!--                  Печать-->
+<!--                </q-item-section>-->
+<!--              </q-item>-->
             </q-list>
           </q-menu>
         </q-btn>

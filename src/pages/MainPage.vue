@@ -4,7 +4,7 @@
   <q-page-container>
     <q-page class="q-pa-md">
       <div class="flex flex-center column"  v-if="role === 'report_operator'">
-        <div style="width: 60%;" class="flex flex-center row justify-around">
+        <div style="width: 54%;" class="flex flex-center row justify-around">
           <div class="flex items-center">
             Выберите подразделение
             <q-select style="width: 210px; margin-left: 10px;"  filled v-model="currentSubdivision" :options="allSubdivisions"/>
@@ -19,6 +19,7 @@
             title="Табели учета рабочего времени"
             @row-click="onRowClick"
             :rows-per-page-options="[0]"
+            no-data-label="Ничего не удалось найти"
           >
           </q-table>
         </q-card>
@@ -38,14 +39,15 @@
             title="Графики отпусков на текущий год"
             @row-click="onRowClickVacations"
             :rows-per-page-options="[0]"
+            no-data-label="Ничего не удалось найти"
           >
-            <template #top-right>
-              <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">
-                <template #append>
-                  <q-icon name="search" />
-                </template>
-              </q-input>
-            </template>
+<!--            <template #top-right>-->
+<!--              <q-input  dense debounce="300" v-model="filter" placeholder="Поиск">-->
+<!--                <template #append>-->
+<!--                  <q-icon name="search" />-->
+<!--                </template>-->
+<!--              </q-input>-->
+<!--            </template>-->
           </q-table>
         </q-card>
       </div>

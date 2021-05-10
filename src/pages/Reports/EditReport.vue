@@ -15,7 +15,8 @@
             </div>
           </div>
           <div class="q-mr-md">
-            <q-btn class="bg-secondary text-white" label="Сохранить" @click="editReport"/>
+            <q-btn class="bg-secondary text-white q-mr-lg" label="Сохранить" @click="editReport"/>
+            <q-btn class="bg-negative text-white" label="Удалить" @click="deleteReport"/>
           </div>
         </div>
         <div class="q-mt-md q-ml-md">
@@ -50,6 +51,16 @@ export default {
     }
   },
   methods: {
+    async deleteReport() {
+        await fetch('http://192.168.1.188:8080/api/deleteReport', {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'POST',
+          body: JSON.stringify({id: this.id})
+        })
+        await this.$router.push('/')
+    },
     async editReport() {
       let month_end = this.month.indexOf(this.test)
       if (month_end === 12) {
