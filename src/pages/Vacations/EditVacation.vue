@@ -32,6 +32,7 @@
             <div class="q-mr-md">
               <q-btn class="bg-secondary text-white" label="Печать" @click="test"/>
               <q-btn class="bg-secondary text-white q-ml-lg" label="Сохранить" @click="saveVacation"/>
+              <q-btn class="bg-negative text-white q-ml-lg" label="Удалить" @click="deleteVacation"/>
             </div>
           </div>
           <q-table
@@ -209,6 +210,16 @@ export default {
     }
   },
   methods: {
+    async deleteVacation() {
+      await fetch('http://192.168.1.188:8080/api/deleteVacation', {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: 'POST',
+        body: JSON.stringify({id: this.id})
+      })
+      await this.$router.push('/')
+    },
     test() {
       fetch('http://127.0.0.1:5000/createXml', {
         headers: {
