@@ -32,7 +32,7 @@
         </div>
         <q-card style="width: 80%;">
           <q-table
-            :columns="columns"
+            :columns="columnsVacation"
             :data="data"
             row-key="name"
             title="Графики отпусков на текущий год"
@@ -69,6 +69,12 @@ export default {
       data: [],
       columns: [
         {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true, style: 'width: 20px'},
+        {name: 'date_start', required: true, label: 'Дата начала', align: 'left', field: 'date_start', sortable: true, style: 'width: 40px'},
+        {name: 'edit', required: true, align: 'left', field: 'edit', style: 'width: 30px'},
+      ],
+      columnsVacation: [
+        {name: 'number', required: true, label: '№', align: 'left', field: 'number', sortable: true, style: 'width: 20px'},
+        {name: 'name', required: true, label: 'Подразделение', align: 'left', field: 'name', sortable: true, style: 'width: 40px'},
         {name: 'date_start', required: true, label: 'Дата начала', align: 'left', field: 'date_start', sortable: true, style: 'width: 40px'},
         {name: 'edit', required: true, align: 'left', field: 'edit', style: 'width: 30px'},
       ],
