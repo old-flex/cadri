@@ -15,7 +15,8 @@
             </div>
           </div>
           <div class="q-mr-md">
-            <q-btn class="bg-secondary text-white q-mr-lg" label="Сохранить" @click="editReport"/>
+            <q-btn class="bg-secondary text-white" label="Печать" @click="createXls"/>
+            <q-btn class="bg-secondary text-white" label="Сохранить" @click="editReport"/>
             <q-btn class="bg-negative text-white" label="Удалить" @click="deleteReport"/>
           </div>
         </div>
@@ -60,6 +61,18 @@ export default {
           body: JSON.stringify({id: this.id})
         })
         await this.$router.push('/')
+    },
+    async createXls() {
+      console.log(this.strings)
+      await fetch('http://127.0.0.1:5000/createXmlOrder',{
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          employees: this.strings
+        })
+      } )
     },
     async editReport() {
       let month_end = this.month.indexOf(this.test)

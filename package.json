@@ -1,8 +1,8 @@
 {
-  "name": "front_helper",
+  "name": "Помощь кадрам",
   "version": "0.0.1",
   "description": "Front helper",
-  "productName": "front_helper",
+  "productName": "Помощь кадрам",
   "author": "old-flex <kostyaniusgaming@gmail.com>",
   "private": true,
   "scripts": {
